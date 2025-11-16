@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Stop Centre - Investigator Panel</title>
+    <link rel="stylesheet" href="investigator.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        // Check authentication before loading page
+        if (sessionStorage.getItem('investigator_logged_in') !== 'true') {
+            window.location.href = 'investigator-login.html';
+        }
+    </script>
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo-section">
+            <img src="pictures\petronas.png" alt="PETRONAS Logo" class="petronas-logo">
+            <h2>🛡️ One Stop Centre</h2>
+            <p class="tagline">Investigator Panel</p>
+        </div>
+
+        <div class="investigator-info">
+            <div class="avatar">👤</div>
+            <div class="info">
+                <strong>Investigator</strong>
+                <small>Badge #INV-001</small>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <button class="menu-btn active" onclick="showSection('dashboard')">
+                <span class="icon">📊</span>
+                <span>Dashboard</span>
+            </button>
+            <button class="menu-btn" onclick="showSection('cases')">
+                <span class="icon">📂</span>
+                <span>All Cases</span>
+            </button>
+            <button class="menu-btn" onclick="showSection('analytics')">
+                <span class="icon">📈</span>
+                <span>Trend Analytics</span>
+            </button>
+            <button class="menu-btn" onclick="showSection('news')">
+                <span class="icon">📰</span>
+                <span>Threat Intelligence</span>
+            </button>
+        </nav>
+
+        <!-- Back to Public View / Logout -->
+        <button class="back-btn" onclick="logout()">
+            👥 Public View / Logout
+        </button>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+
+        <!-- DASHBOARD SECTION -->
+        <div id="dashboard" class="section active">
+            <div class="section-header">
+                <h1>Investigator Dashboard</h1>
+                <p class="subtitle">Overview of all cybercrime reports and cases</p>
+            </div>
+
+            <!-- Statistics Cards -->
+            <div class="stats-grid">
+                <div class="stat-card new">
+                    <div class="stat-icon">📝</div>
+                    <div class="stat-content">
+                        <h3 id="newCases">0</h3>
+                        <p>New Cases</p>
+                    </div>
+                    <div class="stat-trend">+0 today</div>
+                </div>
+                
+                <div class="stat-card investigating">
+                    <div class="stat-icon">🔍</div>
+                    <div class="stat-content">
+                        <h3 id="activeCases">0</h3>
+                        <p>Active Investigations</p>
+                    </div>
+                    <div class="stat-trend">In progress</div>
+                </div>
+                
+                <div class="stat-card resolved">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-content">
+                        <h3 id="resolvedCases">0</h3>
+                        <p>Resolved Cases</p>
+                    </div>
+                    <div class="stat-trend">This month</div>
+                </div>
+                
+                <div class="stat-card priority">
+                    <div class="stat-icon">⚠️</div>
+                    <div class="stat-content">
+                        <h3 id="highPriority">0</h3>
+                        <p>High Priority</p>
+                    </div>
+                    <div class="stat-trend">Urgent</div>
+                </div>
+            </div>
+
+            <!-- Recent Cases -->
+            <div class="recent-cases">
+                <div class="section-title">
+                    <h3>Recent Cases</h3>
+                    <button class="btn-view-all" onclick="showSection('cases')">View All →</button>
+                </div>
+                <div id="recentCasesList" class="cases-table">
+                    <p class="no-data">No cases to display</p>
+                </div>
+            </div>
+
+            <!-- Crime Type Distribution -->
+            <div class="chart-container">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3>Crime Type Distribution</h3>
+                    <span id="crimeTypeTotal" style="color: var(--text-muted); font-size: 14px;">Total: 0 cases</span>
+                </div>
+                <div id="crimeTypeChart" class="chart" style="position: relative; height: 400px;">
+                    <p class="no-data">Loading chart...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ALL CASES SECTION -->
+        <div id="cases" class="section">
+            <div class="section-header">
+                <h1>Case Management</h1>
+                <p class="subtitle">View and manage all reported cases</p>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters-bar">
+                <div class="filter-group">
+                    <label>Status:</label>
+                    <select id="filterStatus" onchange="filterCases()">
+                        <option value="all">All</option>
+                        <option value="New">New</option>
+                        <option value="Investigating">Investigating</option>
+                        <option value="Resolved">Resolved</option>
+                        <option value="Closed">Closed</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Crime Type:</label>
+                    <select id="filterCrimeType" onchange="filterCases()">
+                        <option value="all">All Types</option>
+                        <option value="phishing">Phishing</option>
+                        <option value="hacking">Hacking</option>
+                        <option value="scam">Scam</option>
+                        <option value="identity-theft">Identity Theft</option>
+                        <option value="cyberbullying">Cyberbullying</option>
+                        <option value="malware">Malware</option>
+                        <option value="financial-fraud">Financial Fraud</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Priority:</label>
+                    <select id="filterPriority" onchange="filterCases()">
+                        <option value="all">All</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+                
+                <div class="search-group">
+                    <input type="text" id="searchCase" placeholder="Search by case number..." onkeyup="filterCases()">
+                </div>
+            </div>
+
+            <!-- Cases List -->
+            <div id="casesList" class="cases-grid">
+                <p class="no-data">No cases to display</p>
+            </div>
+        </div>
+
+        <!-- CASE DETAIL MODAL -->
+        <div id="caseDetailModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Case Details</h2>
+                    <button class="close-btn" onclick="closeModal()">&times;</button>
+                </div>
+                
+                <div class="modal-body" id="caseDetailContent">
+                    <!-- Case details will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TREND ANALYTICS SECTION -->
+        <div id="analytics" class="section">
+            <div class="section-header">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+                    <div>
+                        <h1>Trend Analytics</h1>
+                        <p class="subtitle">Data-driven insights and predictive analytics for case management</p>
+                    </div>
+                    <button class="btn-primary" onclick="exportToCSV()" style="margin-top: 0;">
+                        📥 Export Data to CSV
+                    </button>
+                </div>
+            </div>
+
+            <!-- Statistics Overview -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-content">
+                        <h3 id="analyticsTotalReports">0</h3>
+                        <p>Total Reports</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⚠️</div>
+                    <div class="stat-content">
+                        <h3 id="analyticsActiveReports">0</h3>
+                        <p>Active Cases</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-content">
+                        <h3 id="analyticsResolvedReports">0</h3>
+                        <p>Resolved</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-content">
+                        <h3 id="analyticsResolutionRate">0%</h3>
+                        <p>Resolution Rate</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Predictions Section -->
+            <div class="predictions-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <div>
+                        <h3>🔮 Predictive Insights</h3>
+                        <p class="section-description">Analytics based on historical case data patterns</p>
+                    </div>
+                    <button class="btn-secondary" onclick="generateSampleData()" style="margin-top: 0;">
+                        📊 Load Sample Data
+                    </button>
+                </div>
+                <div id="analytics-predictions-container" class="predictions-grid">
+                    <div class="prediction-loading">Analyzing data patterns...</div>
+                </div>
+            </div>
+
+            <!-- Data Analysis Charts -->
+            <div class="charts-section">
+                <h3>📊 Data Analysis & Insights</h3>
+                <p class="section-description">Interactive charts and visualizations for case analysis</p>
+                <div id="analytics-charts-container" class="charts-grid">
+                    <div class="chart-loading">Loading charts...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEWS & THREAT INTELLIGENCE SECTION -->
+        <div id="news" class="section">
+            <div class="section-header">
+                <h1>Threat Intelligence</h1>
+                <p class="subtitle">Latest cybersecurity news and threat updates</p>
+            </div>
+
+            <!-- Threat Alerts -->
+            <div class="threat-alerts">
+                <div class="alert-card high">
+                    <div class="alert-icon">🚨</div>
+                    <div class="alert-content">
+                        <h4>High Alert</h4>
+                        <p>New phishing campaign targeting banking sector</p>
+                        <small>2 hours ago</small>
+                    </div>
+                </div>
+                
+                <div class="alert-card medium">
+                    <div class="alert-icon">⚠️</div>
+                    <div class="alert-content">
+                        <h4>Medium Alert</h4>
+                        <p>Increase in social media account takeovers</p>
+                        <small>5 hours ago</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- News Feed -->
+            <div class="news-section">
+                <div class="news-header-row">
+                    <h3>Latest Security News</h3>
+                    
+                    <div class="news-controls">
+                        <select id="threatNewsCategory" class="news-filter">
+                            <option value="all">All News</option>
+                            <option value="Malware">🦠 Malware & Viruses</option>
+                            <option value="Vulnerability">🛡️ Vulnerabilities</option>
+                        </select>
+                        
+                        <div class="search-container">
+                            <input type="text" id="threatNewsSearchInput" placeholder="Search title or description">
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="threatNewsFeedContainer">
+                    <ul id="threatNewsFeed">
+                        <li>Loading latest cybersecurity news...</li>
+                    </ul>
+                </div>
+                <div class="load-more-container">
+                    <button id="threatLoadMoreBtn" class="btn-secondary" style="display: none;">Load More News</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="investigator.js"></script>
+</body>
+</html>
