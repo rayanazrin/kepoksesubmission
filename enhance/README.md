@@ -234,9 +234,7 @@ The platform adapts to different screen sizes:
 
 ---
 
-## 🚀 FUTURE ENHANCEMENTS (If Time Permits)
-
-### **Bonus Features You Could Add:**
+## 🚀 FUTURE ENHANCEMENTS
 
 1. **Email Notifications**
    - Send confirmation emails
@@ -259,101 +257,7 @@ The platform adapts to different screen sizes:
    - English + Bahasa Malaysia
    - Easy to implement
 
----
 
-## 💻 LIVE DEMO SCRIPT
 
-### **Opening (30 seconds):**
-"CyberShield is a comprehensive cybercrime reporting platform that bridges the gap between citizens and investigators. It makes reporting accessible, tracking transparent, and case management efficient."
-
-### **User Demo (2 minutes):**
-1. "A citizen receives a phishing email..."
-2. Submit report with evidence
-3. "They get instant confirmation with case number"
-4. Track report status in real-time
-
-### **Investigator Demo (2 minutes):**
-1. "Investigator sees new case on dashboard"
-2. Filter and search capabilities
-3. View full case details
-4. Update status and priority
-5. "Case resolved, citizen notified"
-
-### **Innovation Highlights (1 minute):**
-- AI chatbot for instant help
-- Smart priority detection
-- Anonymous reporting
-- Professional investigator tools
-
-### **Closing:**
-"CyberShield demonstrates how technology can make cybercrime reporting accessible, efficient, and user-friendly for both citizens and law enforcement."
-
----
-
-## 🏆 WINNING POINTS
-
-### **What Judges Will Love:**
-
-1. ✅ **Complete Solution** - Not just one feature, full platform
-2. ✅ **Professional Quality** - Looks production-ready
-3. ✅ **User Experience** - Intuitive and accessible
-4. ✅ **Innovation** - AI assistant, auto-priority
-5. ✅ **Practicality** - Solves real problems
-6. ✅ **Scalability** - Easy to expand
-7. ✅ **Security Conscious** - Anonymous reporting, validation
-8. ✅ **Visual Appeal** - Modern, professional design
-
----
-
-## 🤝 TEAM COLLABORATION
-
-### **How to Divide Work (if making changes):**
-
-- **Person 1**: Test all features, prepare demo
-- **Person 2**: Add sample data, screenshots
-- **Person 3**: Practice presentation
-- **Person 4**: Prepare Q&A responses
-- **Person 5**: Create backup plan, documentation
-
----
-
-## ❓ FAQ FOR JUDGES
-
-**Q: Is this production-ready?**
-A: The frontend is production-ready. For production, we'd add a backend API, authentication, and database.
-
-**Q: How does data security work?**
-A: Currently uses localStorage for demo. In production, we'd use encrypted databases, HTTPS, and role-based access control.
-
-**Q: Can it scale?**
-A: Yes! Architecture is modular. Easy to add authentication, real-time updates, and connect to databases.
-
-**Q: How long did it take?**
-A: We focused on core functionality first (Day 1), then enhanced UI/UX and added investigator features (Day 2).
-
----
-
-## 📞 SUPPORT
-
-If you need help during the hackathon:
-- Check console for errors (F12)
-- Verify localStorage is enabled
-- Test in different browsers
-- Have backup demo data ready
-
----
-
-## 🎉 GOOD LUCK!
-
-You have a **strong, complete solution** for Challenge 3. The platform is:
-- ✅ User-friendly
-- ✅ Professional
-- ✅ Functional
-- ✅ Innovative
-- ✅ Scalable
-
-**Focus on demonstrating the user journey and investigator workflow. Show how it solves real problems!**
-
----
 
 **Built with 🛡️ for PETRONAS SECURE NEH Hackathon 2025**
