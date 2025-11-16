@@ -95,7 +95,7 @@ CyberShield/
 
 ### **For Hackathon Demo:**
 
-1. **Open `index.html`** in a web browser
+1. **Open `index.html`** in a web browser and run server using "node server.js" command inside the terminal.
 2. **Navigate through sections**:
    - Report Crime
    - Track Report
