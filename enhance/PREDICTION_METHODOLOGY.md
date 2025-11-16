@@ -175,21 +175,3 @@ The prediction system uses **statistical analysis** and **pattern recognition** 
 
 ---
 
-## Presentation Points Summary
-
-• **7-8 Prediction Types**: Crime type, peak day, platform risk, priority, resolution time, growth trend, reporting behavior, assignment status
-
-• **Statistical Methods**: Frequency analysis, time-series comparison, average calculation, ratio analysis
-
-• **Real-time Processing**: All calculations performed client-side in JavaScript
-
-• **Data-Driven**: Based on actual historical case data from localStorage
-
-• **Actionable Insights**: Each prediction includes recommendations for users/investigators
-
-• **Visual Feedback**: Color-coded trend indicators (green/yellow/red) for quick understanding
-
-• **No External Dependencies**: Works entirely offline with local data
-
-• **Scalable**: Handles datasets from 1 to 1000+ reports efficiently
-
